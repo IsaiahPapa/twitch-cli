@@ -9,7 +9,7 @@ import (
 	"math/big"
 )
 
-//RandomUserID generates a random user ID from 1->100,000,000 for use in mock events
+// RandomUserID generates a random user ID from 1->100,000,000 for use in mock events
 func RandomUserID() string {
 	uid, err := rand.Int(rand.Reader, big.NewInt(1*100*100*100*100))
 	if err != nil {
@@ -18,7 +18,7 @@ func RandomUserID() string {
 	return uid.String()
 }
 
-//RandomGUID generates a random GUID for use with creating IDs in the local store and for mock events
+// RandomGUID generates a random GUID for use with creating IDs in the local store and for mock events
 func RandomGUID() string {
 	b := make([]byte, 16)
 	_, err := rand.Read(b)
@@ -47,7 +47,7 @@ func RandomViewerCount() int64 {
 	return viewer.Int64()
 }
 
-//RandomInt generates a random integer between 0->max
+// RandomInt generates a random integer between 0->max
 func RandomInt(max int64) int64 {
 	someInt, err := rand.Int(rand.Reader, big.NewInt(max))
 	if err != nil {
@@ -70,4 +70,32 @@ func RandomType() string {
 	} else {
 		return "subscription"
 	}
+}
+
+type RGBColor struct {
+	Red   int64
+	Green int64
+	Blue  int64
+}
+
+func RandomColorInRgb() RGBColor {
+	Red := RandomInt(255)
+	Green := RandomInt(255)
+	blue := RandomInt(255)
+	c := RGBColor{Red, Green, blue}
+	return c
+}
+
+func RandomColorInHex() string {
+	color := RandomColorInRgb()
+	hex := "#" + getHex(color.Red) + getHex(color.Green) + getHex(color.Blue)
+	return hex
+}
+
+func getHex(num int64) string {
+	hex := fmt.Sprintf("%x", num)
+	if len(hex) == 1 {
+		hex = "0" + hex
+	}
+	return hex
 }

@@ -1,0 +1,6 @@
+twitch event trigger subscribe -F https://localhost:8080/eventsub/ 
+
+
+go run main.go event trigger channel.chat.message -F http://127.0.0.1:3000/api/eventsub
+
+go run main.go event verify-subscription channel.chat.message -F http://127.0.0.1:3000/api/eventsub
